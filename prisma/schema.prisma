@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model service_identifiers{
+  id String @id
+  id_grp String
+  identifier_type String
+  def_service_id String
+  prop_key String
+  prop_value String
+  prop_is_identifying String
+  version_from Int
+  version_to Int
+  date_created DateTime
+  date_modified DateTime
+  config_id String
+}
