@@ -1,3 +1,30 @@
 :root{
     font-family: 'Montserrat';
+    --truendo-blue:#4BB3C3  !important;
 }
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    color: rgb(90, 90, 90);
+}
+
+
+
+
+body{
+    margin-top: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    background-color: #F4FAFF;
+}
+
+
+.main{
+    display: flex;
+    justify-content: space-around;
+}
+
+
+

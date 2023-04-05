@@ -1,0 +1,27 @@
+.vendor_li{
+    list-style:decimal;
+    padding: 1rem;
+}
+
+.vendors ul{
+    padding: 3rem;
+    border-radius: 25px;
+    background-color: rgb(232, 232, 232);
+}
+
+.vendors{
+    width: 50%;
+}
+
+.hero h1{
+    margin-bottom: 3rem;
+}
+
+.hero p{
+    line-height: 1.4rem;
+    opacity: .8;
+}
+
+.hero{
+    margin-bottom: 2rem;
+}

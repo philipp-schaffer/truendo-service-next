@@ -2,7 +2,10 @@
 import { Inter } from '@next/font/google'
 import { Prisma, PrismaClient } from '@prisma/client'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react'
+import NavBar from './navbar'
+import Vendors from './vendors'
+import LeftBar from './left-bar'
+import PopularList from './popularlist'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,43 +14,53 @@ const inter = Inter({ subsets: ['latin'] })
 
 async function getServiceIdentifiers(){
   const prisma = new PrismaClient();
+
   const service_identifiers = await prisma.service_identifiers.findMany();
-  console.log(service_identifiers);
+  //console.log(service_identifiers);
   return JSON.parse(JSON.stringify(service_identifiers));
 }
 
+async function getVendors() {
+  const prisma = new PrismaClient();
+
+  const vendors = await prisma.vendors.findMany();
+  console.log(vendors);
+  return JSON.parse(JSON.stringify(vendors));
+}
+
 export const getStaticProps: GetStaticProps<{
-  service_identifier: Prisma.PromiseReturnType<typeof getServiceIdentifiers>
+  service_identifier: Prisma.PromiseReturnType<typeof getServiceIdentifiers>;
+  vendors: Prisma.PromiseReturnType<typeof getVendors>;
 }> = async () => {
-  const service_identifier = await getServiceIdentifiers()
+  const service_identifier = await getServiceIdentifiers();
+  const vendors = await getVendors();
+
   return {
       props: {
-          service_identifier
+          service_identifier,
+          vendors
       }
   }
 }
+const items = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-  var erg = 12;
     return (
       <>
-      <h2>{erg}</h2>
-        <div>
-           <ul>
-            
-           {
-            props.service_identifier.map((element: { def_service_id: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined }) => (
-              <li>
-                {element.def_service_id}
-              </li>
-            ))
-           }
-            
-           </ul>
+      <NavBar />
+        <div className='main'>
+          
+          <LeftBar />
+          <Vendors vendors={props.vendors} />
+          <PopularList />
         </div>
-        </>
+        </>          
     )
 }
 

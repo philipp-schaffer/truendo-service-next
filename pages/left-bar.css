@@ -1,0 +1,15 @@
+.leftBar{
+    border: 1px solid red;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 20px;
+    height: max-content;
+
+}
+
+.leftBar ul li{
+    padding: 1rem;
+    margin-bottom: 1rem;
+        list-style: none;
+
+}

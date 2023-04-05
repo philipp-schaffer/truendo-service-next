@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,17 +7,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model service_identifiers{
-  id String @id
-  id_grp String
-  identifier_type String
-  def_service_id String
-  prop_key String
-  prop_value String
-  prop_is_identifying String
-  version_from Int
-  version_to Int
-  date_created DateTime
-  date_modified DateTime
-  config_id String
+model service_identifiers {
+  id                  String   @db.VarChar(36)
+  id_grp              String   @db.VarChar(36)
+  identifier_type     String   @db.VarChar(50)
+  def_service_id      String   @db.VarChar(1000)
+  prop_key            String   @db.VarChar(1000)
+  prop_value          String   @db.VarChar(1000)
+  prop_is_identifying Boolean
+  version_from        Int
+  version_to          Int
+  date_created        DateTime @db.Timestamp(6)
+  date_modified       DateTime @db.Timestamp(6)
+  config_id           String   @db.VarChar(255)
+
+  @@id([id, id_grp, prop_key, prop_is_identifying])
+}
+
+model services {
+  id                       String  @id @db.VarChar(31)
+  def_purpose_id           String  @db.VarChar(30)
+  def_vendor_id            String  @db.VarChar(36)
+  def_region               String  @db.VarChar(11)
+  def_mandatory_data_types String  @db.VarChar(100)
+  def_optional_data_types  String  @db.VarChar(50)
+  cookie_domain            String? @db.VarChar(30)
+  is_privacy_relevant      Boolean
+}
+
+model translations {
+  name                         String  @db.VarChar(100)
+  category                     String  @db.VarChar(25)
+  language                     String  @db.VarChar(5)
+  value                        String  @db.VarChar(500)
+  name_category_language_value String? @map("name;category;language;value") @db.VarChar(100)
+
+  @@id([name, category, language])
+}
+
+model vendors {
+  id              String @id @db.VarChar(36)
+  short_name      String @db.VarChar(25)
+  company_name    String @db.VarChar(100)
+  company_address String @db.VarChar(150)
+  website         String @db.VarChar(200)
+  policy_link     String @db.VarChar(150)
 }

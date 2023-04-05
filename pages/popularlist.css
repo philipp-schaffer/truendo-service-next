@@ -1,0 +1,8 @@
+.popularList ul li{
+    list-style: none;
+    padding: 1rem;
+}
+
+.popularList h2{
+    margin-bottom: 2rem;
+}
